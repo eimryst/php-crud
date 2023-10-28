@@ -38,19 +38,10 @@
         });
     </script>
     <?php
-        include ('connect_to_database.php');
-        require 'vendor/autoload.php';
-        use Cloudinary\Configuration\Configuration;
 
-        Configuration::instance([
-            'cloud' => [
-                'cloud_name' => 'dstsbhlj2', 
-                'api_key' => '522834947654228', 
-                'api_secret' => '21_30PBkNrmWjR7XHGEEsHKMcz8'],
-                'url' => [
-                'secure' => true
-            ]
-        ]);
+    use Cloudinary\Api\Upload\UploadApi;
+
+        include ('connect_to_database.php');
 
         $query = "SELECT * FROM tblcars";
         $post_result = mysqli_query($conCD, $query);
@@ -84,13 +75,20 @@
                 echo 'ID does not exist.';
             }
         }
+        
+
 
         if (isset($_POST['yes'])) {
+            $public_id = $row['image_id'];
+
+            $uploadApi = new UploadApi();
+            $delete = $uploadApi->destroy($public_id);
+
+            if($delete){
             $sql = "DELETE FROM TBLCARS
                     WHERE ID = $carID";
 
             $result = mysqli_query($conCD, $sql);
-    
             if ($result) {
                 echo "<script> alert ('Deletion success.') </script>";
                 header('Location: Home.php');
@@ -103,6 +101,7 @@
             header('Location: Home.php');
             exit;
         }
+    }
         
 
     ?>
@@ -120,8 +119,8 @@
             <input type="number" name="" id="" value="<?= $row['id'] ?>" disabled>
         </div>
         <div>
-            <label for="">Image:</label>
-            <input type="file" name="image" id="image" value="<?= $row['image'] ?>" disabled>
+        <label for="image">Image:</label>
+        <img src="<?= $row['image'] ?>" alt="Car Image" width="200" height="200">
         </div>
         <div>
             <label for="">Make/Brand:</label>

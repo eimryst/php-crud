@@ -166,7 +166,7 @@
 
         // sorting and displaying
         if (empty($mName) && empty($sortBy)){
-            $sql = "SELECT * FROM tblcars WHERE $whereClause ORDER BY ID ASC";
+            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY ID ASC";
         }
         elseif (empty($sortBy)){
             $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY id ASC";

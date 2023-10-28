@@ -39,19 +39,7 @@
     </script>
 <?php
     include ('connect_to_database.php');
-    require 'vendor/autoload.php';
-    use Cloudinary\Configuration\Configuration;
     use Cloudinary\Api\Upload\UploadApi;
-
-    Configuration::instance([
-        'cloud' => [
-            'cloud_name' => 'dstsbhlj2', 
-            'api_key' => '522834947654228', 
-            'api_secret' => '21_30PBkNrmWjR7XHGEEsHKMcz8'],
-            'url' => [
-            'secure' => true
-        ]
-    ]);
 
     $make = '';
     $model_name = '';
@@ -72,9 +60,10 @@
             $response = $uploadApi->upload($_FILES['image']['tmp_name']);
 
             $image = $response['secure_url'];
+            $image_id = $response['public_id'];
 
-            $sqlquery = "INSERT INTO TBLCARS(IMAGE, MODEL_NAME, MAKE, TRANSMISSION, FUEL_TYPE, PRICE)
-                            VALUES('".$image."', '".$model_name."', '".$make."', '".$transmission."', '".$fuel_type."', '".$price."')";      
+            $sqlquery = "INSERT INTO TBLCARS(IMAGE, IMAGE_ID, MODEL_NAME, MAKE, TRANSMISSION, FUEL_TYPE, PRICE)
+                            VALUES('".$image."', '".$image_id."', '".$model_name."', '".$make."', '".$transmission."', '".$fuel_type."', '".$price."')";      
 
             mysqli_query($conCD, $sqlquery);
 

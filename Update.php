@@ -55,6 +55,7 @@
             $carID = $_GET['id'];
         }
 
+
         $sql = "SELECT * FROM TBLCARS WHERE ID = '$carID'";
         $result = mysqli_query($conCD, $sql);
 
@@ -83,6 +84,7 @@
         </div>
         <div>
             <label for="">Image:</label>
+            <img src="<?= $row['image'] ?>" alt="Car Image" width="200" height="200">
             <input type="file" name="image" id="image" value="<?= $row['image'] ?>">
         </div>
         <div>
@@ -134,20 +136,8 @@
     </form>
 
     <?php
-    require 'vendor/autoload.php';
-    use Cloudinary\Configuration\Configuration;
     use Cloudinary\Api\Upload\UploadApi;
-
-    Configuration::instance([
-        'cloud' => [
-            'cloud_name' => 'dstsbhlj2', 
-            'api_key' => '522834947654228', 
-            'api_secret' => '21_30PBkNrmWjR7XHGEEsHKMcz8'],
-            'url' => [
-            'secure' => true
-        ]
-    ]);
-
+    
     $make = '';
     $model_name = '';
     $transmission = '';
@@ -156,30 +146,36 @@
     $price = '';
 
     if (isset($_POST['done'])) {
-        $make = $_POST['brand'];
+        $make = $_POST['make'];
         $model_name = $_POST['model'];
         $transmission = $_POST['transmission'];
-        $fuel_type = $_POST['fuel'];
+        $fuel_type = $_POST['fuel_type'];
         $price = $_POST['price'];
+
+            
+        $public_id = $row['image_id'];
+
+            $uploadApi = new UploadApi();
+            $delete = $uploadApi->destroy($public_id);
 
             $uploadApi = new UploadApi();
             $response = $uploadApi->upload($_FILES['image']['tmp_name']);
 
             $image = $response['secure_url'];
+            $image_id = $response['public_id'];
 
             $sql = "UPDATE TBLCARS
-                    SET IMAGE = '$image', MODEL_NAME = '$model_name', MAKE = '$make', TRANSMISSION = '$transmission', FUEL_TYPE = '$fuel_type', PRICE = '$price'
+                    SET IMAGE = '$image', IMAGE_ID = '$image_id', MODEL_NAME = '$model_name', MAKE = '$make', TRANSMISSION = '$transmission', FUEL_TYPE = '$fuel_type', PRICE = '$price'
                     WHERE ID = $carID";
     
             $result = mysqli_query($conCD, $sql);
     
             if ($result) {
-                echo "<script> alert ('Updated successfully.') </script>";
+                header('Location: Home.php');
             } else {
                 echo "Error: " . mysqli_error($conCD);
             }
         }
-    
     
     ?>
 </body>
