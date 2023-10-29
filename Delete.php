@@ -117,12 +117,12 @@
             <input type="number" name="" id="" value="<?= $row['id'] ?>" disabled>
         </div>
         <div>
-        <label for="image">Image:</label>
-        <img src="<?= $row['image'] ?>" alt="Car Image" width="200" height="200">
+            <label for="image">Image:</label>
+            <img src="<?= $row['image'] ?>" alt="Car Image" width="200" height="200">
         </div>
         <div>
             <label for="">Make/Brand:</label>
-            <input type="text" name="brand" id="brand" value="<?= $row['make'] ?>" disabled>
+            <input type="text" name="" id="" value="<?= $row['make'] ?>" disabled>       
         </div>
         <div>
             <label for="">Model Name:</label>
@@ -130,27 +130,11 @@
         </div>
         <div>
             <label for="">Transmission:</label>
-            <select name="transmission" id="transmission" disabled>
-                <option value="Automatic">Automatic</option>
-                <option value="Manual">Manual</option>
-            </select>
+            <input type="text" name="" id="" value="<?= $row['transmission'] ?>" disabled>
         </div>
         <div>
             <label for="">Fuel Type:</label>
-            <select name="fuel" id="fuel" disabled>
-                <option value="Gasoline (Petrol)">Gasoline (Petrol)</option>
-                <option value="Diesel">Diesel</option>
-                <option value="Natural ">Natural Gas</option>
-                <option value="Electric">Electric</option>
-                <option value="Hydrogen">Hydrogen</option>
-                <option value="Ethanol">Ethanol</option>
-                <option value="Biodiesel">Biodiesel</option>
-                <option value="Propane (LPG)">Propane (LPG)</option>
-                <option value="Flex-Fuel">Flex-Fuel</option>
-                <option value="Hydrogen-Powered Combustion Engines">Hydrogen-Powered Combustion Engines</option>
-                <option value="Solar-Powered">Solar-Powered</option>
-                <option value="Compressed Air">Compressed Air</option>
-            </select>
+            <input type="text" name="" id="" value="<?= $row['fuel_type'] ?>" disabled>
         </div>
         <div>
             <label for="">Price:</label>

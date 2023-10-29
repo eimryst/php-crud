@@ -153,8 +153,11 @@
         $price = $_POST['price'];
 
             
-        $public_id = $row['image_id'];
-
+        $whereClause = '';
+        if (!empty($model_name)){
+            $whereClause .= "MODEL_NAME = '$model_name'";
+        }
+        if (!empty($image)){
             $uploadApi = new UploadApi();
             $delete = $uploadApi->destroy($public_id);
 
@@ -164,14 +167,29 @@
             $image = $response['secure_url'];
             $image_id = $response['public_id'];
 
+            $whereClause .= ", IMAGE = '$image', IMAGE_ID = '$image_id'";
+        }
+        if (!empty($make)) {
+            $whereClause .= ", MAKE = '$make'";
+        }
+        if (!empty($transmission)) {
+            $whereClause .= ", TRANSMISSION = '$transmission'";
+        }
+        if (!empty($fuel_type)) {
+            $whereClause .= ", FUEL_TYPE = '$fuel_type'";
+        }
+        if (!empty($price)) {
+            $whereClause .= ", PRICE = '$price'";
+        }
+
             $sql = "UPDATE TBLCARS
-                    SET IMAGE = '$image', IMAGE_ID = '$image_id', MODEL_NAME = '$model_name', MAKE = '$make', TRANSMISSION = '$transmission', FUEL_TYPE = '$fuel_type', PRICE = '$price'
+                    SET $whereClause
                     WHERE ID = $carID";
     
             $result = mysqli_query($conCD, $sql);
     
             if ($result) {
-                header('Location: Home.php');
+                header('Location: Home.php');   
             } else {
                 echo "Error: " . mysqli_error($conCD);
             }
