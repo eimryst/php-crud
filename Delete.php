@@ -39,9 +39,9 @@
     </script>
     <?php
 
-    use Cloudinary\Api\Upload\UploadApi;
 
         include ('connect_to_database.php');
+        use Cloudinary\Api\Upload\UploadApi;
 
         $query = "SELECT * FROM tblcars";
         $post_result = mysqli_query($conCD, $query);
@@ -75,8 +75,6 @@
                 echo 'ID does not exist.';
             }
         }
-        
-
 
         if (isset($_POST['yes'])) {
             $public_id = $row['image_id'];
