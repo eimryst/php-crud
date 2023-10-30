@@ -110,7 +110,7 @@
             </select>
         <div>
             <label for="">Model Name:</label>
-            <input type="text" name="model" id="model" value="<?= $row['model_name'] ?>">
+            <input type="text" name="model" id="model" value="<?= $row['model_name'] ?>" maxlength="20">
         </div>
         <div>
             <label for="">Transmission:</label>
@@ -130,7 +130,7 @@
         </div>
         <div>
             <label for="">Price:</label>
-            <input type="number" name="price" id="price" value="<?= $row['price'] ?>">
+            <input type="number" name="price" id="price" value="<?= $row['price'] ?>" maxlength="20">
         </div>
         <input type="submit" value="Done" name="done">
     </form>

@@ -36,7 +36,7 @@
                 <tr>
                     <th>Model Name:</th>
                     <td>
-                        <input type="text" name="model_name" id="model_name" value="<?= $mName ?>">
+                        <input type="text" name="model_name" id="model_name" value="<?= $mName ?>" maxlength="20">
                     </td>
                 </tr>
                 <tr>
@@ -96,9 +96,9 @@
                     </td>
                     <td>
                         Price:
-                        <input type="number" name="min" id="min" value="<?= $min ?>">
+                        <input type="number" name="min" id="min" value="<?= $min ?>" maxlength="20">
                         - 
-                        <input type="number" name="max" id="max" value="<?= $max ?>">
+                        <input type="number" name="max" id="max" value="<?= $max ?>" maxlength="20">
                     </td>
                 </tr>
             </table>
@@ -137,65 +137,15 @@
 
         $sql = "SELECT * FROM tblcars ORDER BY ID ASC";
         
+        $offset = 0;
 
     if(isset($_GET['done'])){
         $mName = $_GET['model_name'];
         $sortBy = $_GET['sortby'];
-
-        // Initialize the WHERE clause with the Model Name condition
-        $whereClause = "model_name LIKE '%$mName%'";
-
-        // Check and add conditions for other optional fields
-        if (!empty($_GET['make'])) {
-            $make = $_GET['make'];
-            $whereClause .= " AND make = '$make'";
-        }
-        if (!empty($_GET['transmission'])) {
-            $transmission = $_GET['transmission'];
-            $whereClause .= " AND transmission = '$transmission'";
-        }
-        if (!empty($_GET['fuel_type'])) {
-            $fuel_type = $_GET['fuel_type'];
-            $whereClause .= " AND fuel_type = '$fuel_type'";
-        }
-        if (!empty($_GET['min']) && !empty($_GET['max'])) {
-            $min = $_GET['min'];
-            $max = $_GET['max'];
-            $whereClause .= " AND price BETWEEN $min AND $max";
-        }
-
-        // sorting and displaying
-        if (empty($mName) && empty($sortBy)){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY ID ASC";
-        }
-        elseif (empty($sortBy)){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY id ASC";
-        }
-        elseif (empty($mName) && $sortBy == 'asc'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY model_name ASC";
-        }
-        elseif (empty($mName) && $sortBy == 'desc'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY model_name DESC";
-        }
-        elseif (empty($mName) && $sortBy == 'asce'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY price ASC";
-        }
-        elseif (empty($mName) && $sortBy == 'desce'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY price DSC";
-        }
-        elseif ($sortBy == 'asc'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY model_name ASC";
-        }
-        elseif ($sortBy == 'desc'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY model_name DESC";
-        }
-        elseif ($sortBy == 'asce'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY price ASC";
-        }
-        elseif ($sortBy == 'desce'){
-            $sql = "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY price DESC";
-        }
+        
+        $sql = searchCars($mName, $sortBy, $make, $transmission, $fuel_type, $min, $max);
     }
+
     $result = mysqli_query($conCD, $sql);
 
     if ($result) {
@@ -229,6 +179,55 @@
     } else {
         echo "Error: " . mysqli_error($conCD);
     }
+
+    function searchCars($mName, $sortBy, $make, $transmission, $fuel_type, $min, $max) {
+    
+            $whereClause = "model_name LIKE '%$mName%'";
+    
+            if (!empty($_GET['make'])) {
+                $make = $_GET['make'];
+                $whereClause .= " AND make = '$make'";
+            }
+            if (!empty($_GET['transmission'])) {
+                $transmission = $_GET['transmission'];
+                $whereClause .= " AND transmission = '$transmission'";
+            }
+            if (!empty($_GET['fuel_type'])) {
+                $fuel_type = $_GET['fuel_type'];
+                $whereClause .= " AND fuel_type = '$fuel_type'";
+            }
+            if (!empty($_GET['min']) && !empty($_GET['max'])) {
+                $min = $_GET['min'];
+                $max = $_GET['max'];
+                $whereClause .= " AND price BETWEEN $min AND $max";
+            }
+            
+            if(empty($mName)){
+                return getAll($whereClause);
+            }
+            else {
+                return getByQuery($whereClause, $sortBy);
+            }
+        }
+    
+        function getAll($whereClause){
+            return "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY ID ASC";
+        }
+
+        function getByQuery($whereClause, $sortBy){
+            if ($sortBy == 'asc') {
+                return "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY model_name ASC";
+            } elseif ($sortBy == 'desc') {
+                return "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY model_name DESC";
+            } elseif ($sortBy == 'asce') {
+                return "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY price ASC";
+            } elseif ($sortBy == 'desce') {
+                return "SELECT * FROM TBLCARS WHERE $whereClause ORDER BY price DESC";
+            }
+            else {
+                return "SELECT * FROM TBLCARS WHERE $whereClause";
+            }
+        }
     
     ?>
 </body>
