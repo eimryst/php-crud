@@ -122,7 +122,25 @@
         </div>
         <div>
             <label for="">Make/Brand:</label>
-            <input type="text" name="" id="" value="<?= $row['make'] ?>" disabled>       
+            <select name="make" id="make" disabled>
+                <option value="<?= $row['make'] ?>"><?= $row['make'] ?></option>
+                <option value="Honda">Honda</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Ford">Ford</option>
+                <option value="Lexus">Lexus</option>
+                <option value="BMW">BMW</option>
+                <option value="Mercedes Benz">Mercedes Benz</option>
+                <option value="Nissan">Nissan</option>
+                <option value="Porsche">Porsche</option>
+                <option value="Tesla">Tesla</option>
+                <option value="Audi">Audi</option>
+                <option value="Jaguar">Jaguar</option>
+                <option value="Subaru">Subaru</option>
+                <option value="Volvo">Volvo</option>
+                <option value="Ferrari">Ferrari</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Bentley">Bentley</option>
+            </select>
         </div>
         <div>
             <label for="">Model Name:</label>
@@ -130,11 +148,20 @@
         </div>
         <div>
             <label for="">Transmission:</label>
-            <input type="text" name="" id="" value="<?= $row['transmission'] ?>" disabled>
+            <select name="transmission" id="transmission" disabled>
+                <option value="<?= $row['transmission'] ?>"><?= $row['transmission'] ?></option>
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+            </select>
         </div>
         <div>
             <label for="">Fuel Type:</label>
-            <input type="text" name="" id="" value="<?= $row['fuel_type'] ?>" disabled>
+            <select name="fuel_type" id="fuel_type" disabled>
+                <option value="<?= $row['fuel_type'] ?>"><?= $row['fuel_type'] ?></option>
+                <option value="Regular">Regular</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Premium">Premium</option>
+            </select>
         </div>
         <div>
             <label for="">Price:</label>

@@ -90,7 +90,7 @@
         <div>
             <label for="">Make/Brand:</label>
             <select name="make" id="make">
-                <option value="">Choose</option>
+                <option value="<?= $row['make'] ?>"><?= $row['make'] ?></option>
                 <option value="Honda">Honda</option>
                 <option value="Toyota">Toyota</option>
                 <option value="Ford">Ford</option>
@@ -115,6 +115,7 @@
         <div>
             <label for="">Transmission:</label>
             <select name="transmission" id="transmission">
+                <option value="<?= $row['transmission'] ?>"><?= $row['transmission'] ?></option>
                 <option value="Automatic">Automatic</option>
                 <option value="Manual">Manual</option>
             </select>
@@ -122,7 +123,7 @@
         <div>
             <label for="">Fuel Type:</label>
             <select name="fuel_type" id="fuel_type">
-                <option value="">Choose</option>
+                <option value="<?= $row['fuel_type'] ?>"><?= $row['fuel_type'] ?></option>
                 <option value="Regular">Regular</option>
                 <option value="Diesel">Diesel</option>
                 <option value="Premium">Premium</option>
